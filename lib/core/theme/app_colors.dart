@@ -1,5 +1,5 @@
 // lib/core/theme/app_colors.dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 abstract final class AppColors {
   static const Color surface = Color(0xFFF8F9FF);

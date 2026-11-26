@@ -9,7 +9,7 @@ final authViewModelProvider =
 class AuthViewModel extends AsyncNotifier<UserModel?> {
   @override
   FutureOr<UserModel?> build() async {
-    return null;
+    return ref.read(authRepositoryProvider).getCurrentUser();
   }
 
   Future<void> login({

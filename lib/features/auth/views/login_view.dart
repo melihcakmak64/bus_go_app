@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_assets.dart';
@@ -123,7 +123,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     child: Image.asset(
                       AppAssets.logo,
                       fit: BoxFit.contain,
-                      errorBuilder: (_, __, ___) => const Row(
+                      errorBuilder: (_, _, _) => const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
