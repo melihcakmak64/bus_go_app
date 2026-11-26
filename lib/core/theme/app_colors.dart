@@ -1,4 +1,3 @@
-// lib/core/theme/app_colors.dart
 import 'package:material_ui/material_ui.dart';
 
 abstract final class AppColors {
@@ -13,6 +12,7 @@ abstract final class AppColors {
   static const Color secondary = Color(0xFFA73A00);
   static const Color secondaryContainer = Color(0xFFFD651E);
   static const Color secondaryFixed = Color(0xFFFFDBCE);
+  static const Color onSecondary = Color(0xFFFFFFFF);
   static const Color onSecondaryContainer = Color(0xFF571A00);
   static const Color tertiaryContainer = Color(0xFF001551);
 

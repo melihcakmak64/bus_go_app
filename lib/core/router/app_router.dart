@@ -1,9 +1,15 @@
+import 'package:bus_go/features/favorites/views/favorites_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/main_shell_view.dart';
 import '../../features/auth/viewmodels/auth_viewmodel.dart';
 import '../../features/auth/views/login_view.dart';
 import '../../features/auth/views/register_view.dart';
 import '../../features/home/views/home_view.dart';
+import '../../features/profile/views/profile_view.dart';
+import '../../features/tickets/views/tickets_view.dart';
+
+const _protectedPaths = {'/home', '/tickets', '/favorites', '/profile'};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
@@ -20,7 +26,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         return '/home';
       }
 
-      if (!isLoggedIn && currentPath == '/home') {
+      if (!isLoggedIn && _protectedPaths.contains(currentPath)) {
         return '/login';
       }
 
@@ -37,15 +43,52 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'register',
         builder: (context, state) => const RegisterView(),
       ),
-      GoRoute(
-        path: '/home',
-        name: 'home',
-        builder: (context, state) => const HomeView(),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainShellView(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/home',
+                name: 'home',
+                builder: (context, state) => const HomeView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/tickets',
+                name: 'tickets',
+                builder: (context, state) => const TicketsView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/favorites',
+                name: 'favorites',
+                builder: (context, state) => const FavoritesView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                name: 'profile',
+                builder: (context, state) => const ProfileView(),
+              ),
+            ],
+          ),
+        ],
       ),
     ],
   );
 
-  // Auth state her değiştiğinde GoRouter redirect'i tetikler; router yeniden kurulmaz
   ref.listen(authViewModelProvider, (_, __) {
     router.refresh();
   });
