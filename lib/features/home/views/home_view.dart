@@ -61,7 +61,7 @@ class HomeView extends ConsumerWidget {
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemCount: cities.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (_, index) {
                     final city = cities[index];
                     return ListTile(
@@ -283,7 +283,7 @@ class HomeView extends ConsumerWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: ui.data.categories.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      separatorBuilder: (_, _) => const SizedBox(width: 8),
                       itemBuilder: (_, index) {
                         final cat = ui.data.categories[index];
                         final isSelected = cat.id == ui.selectedCategoryId;
@@ -602,7 +602,7 @@ class HomeView extends ConsumerWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: ui.data.companies.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      separatorBuilder: (_, _) => const SizedBox(width: 8),
                       itemBuilder: (_, index) {
                         final company = ui.data.companies[index];
                         return Container(
@@ -650,7 +650,7 @@ class HomeView extends ConsumerWidget {
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: ui.data.campaigns.length,
-                        separatorBuilder: (_, __) => const SizedBox(width: 12),
+                        separatorBuilder: (_, _) => const SizedBox(width: 12),
                         itemBuilder: (_, index) {
                           final campaign = ui.data.campaigns[index];
                           return _CampaignCard(
@@ -669,92 +669,6 @@ class HomeView extends ConsumerWidget {
                         },
                       ),
                     ),
-                  const SizedBox(height: 18),
-
-                  // Son Aramalar (Statik)
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Son Aramalar',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.onSurface,
-                        ),
-                      ),
-                      Text(
-                        'Temizle',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.secondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 66,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: ui.data.recentSearches.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 10),
-                      itemBuilder: (_, index) {
-                        final item = ui.data.recentSearches[index];
-                        return Container(
-                          width: 210,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: AppColors.surfaceLowest,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.03),
-                                blurRadius: 4,
-                                offset: const Offset(0, 1),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      '${item.fromCity} → ${item.toCity}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.onSurface,
-                                      ),
-                                    ),
-                                  ),
-                                  const Icon(
-                                    Icons.history_rounded,
-                                    size: 16,
-                                    color: AppColors.onSurfaceVariant,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${item.dateLabel} • ${item.passengerCount} Yolcu',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
                   const SizedBox(height: 18),
 
                   // Popüler Rotalar (Statik)
@@ -972,7 +886,7 @@ class _CampaignCard extends StatelessWidget {
               Image.asset(
                 'assets/images/${campaign.imageName!.trim()}',
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                errorBuilder: (_, _, _) => const SizedBox.shrink(),
               ),
             Container(
               decoration: BoxDecoration(

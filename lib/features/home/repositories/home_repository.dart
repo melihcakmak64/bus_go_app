@@ -19,20 +19,6 @@ class HomeRepository {
     PopularCompanyModel(name: 'Varan'),
   ];
 
-  static const List<RecentSearchModel> _staticRecentSearches = [
-    RecentSearchModel(
-      fromCity: 'İstanbul',
-      toCity: 'İzmir',
-      dateLabel: '12 Ekim',
-      passengerCount: 1,
-    ),
-    RecentSearchModel(
-      fromCity: 'Ankara',
-      toCity: 'Bursa',
-      dateLabel: '5 Ekim',
-      passengerCount: 2,
-    ),
-  ];
 
   static const List<PopularRouteModel> _staticPopularRoutes = [
     PopularRouteModel(
@@ -82,7 +68,6 @@ class HomeRepository {
       cities: cityRows.map(CityModel.fromMap).toList(),
       campaigns: campaignRows.map(CampaignModel.fromMap).toList(),
       companies: _staticCompanies,
-      recentSearches: _staticRecentSearches,
       popularRoutes: _staticPopularRoutes,
     );
   }

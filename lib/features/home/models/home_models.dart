@@ -127,7 +127,6 @@ class HomeDataModel {
   final List<CityModel> cities;
   final List<CampaignModel> campaigns;
   final List<PopularCompanyModel> companies;
-  final List<RecentSearchModel> recentSearches;
   final List<PopularRouteModel> popularRoutes;
 
   const HomeDataModel({
@@ -135,7 +134,6 @@ class HomeDataModel {
     required this.cities,
     required this.campaigns,
     required this.companies,
-    required this.recentSearches,
     required this.popularRoutes,
   });
 }
