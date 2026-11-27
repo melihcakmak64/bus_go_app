@@ -61,7 +61,7 @@ class HomeView extends ConsumerWidget {
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemCount: cities.length,
-                  separatorBuilder: (_, _) => const Divider(height: 1),
+                  separatorBuilder: (_, __) => const Divider(height: 1),
                   itemBuilder: (_, index) {
                     final city = cities[index];
                     return ListTile(
@@ -283,7 +283,7 @@ class HomeView extends ConsumerWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: ui.data.categories.length,
-                      separatorBuilder: (_, _) => const SizedBox(width: 8),
+                      separatorBuilder: (_, __) => const SizedBox(width: 8),
                       itemBuilder: (_, index) {
                         final cat = ui.data.categories[index];
                         final isSelected = cat.id == ui.selectedCategoryId;
@@ -461,14 +461,12 @@ class HomeView extends ConsumerWidget {
                                       children: [
                                         _DateChip(
                                           label: 'Bugün',
-                                          onTap: () =>
-                                              vm.setDatePreset('Bugün'),
+                                          onTap: () => vm.setDatePreset('Bugün'),
                                         ),
                                         const SizedBox(width: 6),
                                         _DateChip(
                                           label: 'Yarın',
-                                          onTap: () =>
-                                              vm.setDatePreset('Yarın'),
+                                          onTap: () => vm.setDatePreset('Yarın'),
                                         ),
                                       ],
                                     ),
@@ -488,8 +486,7 @@ class HomeView extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Row(
                                         children: [
@@ -602,7 +599,7 @@ class HomeView extends ConsumerWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: ui.data.companies.length,
-                      separatorBuilder: (_, _) => const SizedBox(width: 8),
+                      separatorBuilder: (_, __) => const SizedBox(width: 8),
                       itemBuilder: (_, index) {
                         final company = ui.data.companies[index];
                         return Container(
@@ -650,7 +647,7 @@ class HomeView extends ConsumerWidget {
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: ui.data.campaigns.length,
-                        separatorBuilder: (_, _) => const SizedBox(width: 12),
+                        separatorBuilder: (_, __) => const SizedBox(width: 12),
                         itemBuilder: (_, index) {
                           final campaign = ui.data.campaigns[index];
                           return _CampaignCard(
@@ -693,83 +690,30 @@ class HomeView extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: ui.data.popularRoutes.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1.4,
-                        ),
-                    itemBuilder: (_, index) {
-                      final route = ui.data.popularRoutes[index];
-                      return Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: AppColors.surfaceLowest,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.03),
-                              blurRadius: 4,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${route.fromCity} → ${route.toCity}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.onSurface,
-                                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 150,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: ui.data.popularRoutes.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (_, index) {
+                        final route = ui.data.popularRoutes[index];
+                        return _PopularRouteCard(
+                          route: route,
+                          isOrangeVariant: index.isEven,
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${route.fromCity} → ${route.toCity} (${route.startingPrice} TL)',
                                 ),
-                                Text(
-                                  route.dailyTripsLabel,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: AppColors.onSurfaceVariant,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'BAŞLANGIÇ',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 0.4,
-                                    color: AppColors.onSurfaceVariant,
-                                  ),
-                                ),
-                                Text(
-                                  '${route.startingPrice} TL',
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.secondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 18),
 
@@ -839,6 +783,115 @@ class HomeView extends ConsumerWidget {
   }
 }
 
+class _PopularRouteCard extends StatelessWidget {
+  final PopularRouteModel route;
+  final bool isOrangeVariant;
+  final VoidCallback onTap;
+
+  const _PopularRouteCard({
+    required this.route,
+    required this.isOrangeVariant,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final gradientColors = isOrangeVariant
+        ? const [AppColors.secondaryContainer, AppColors.secondary]
+        : const [AppColors.primary, AppColors.tertiaryContainer];
+    final ellipseOpacity = isOrangeVariant ? 0.08 : 0.06;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Container(
+        width: 200,
+        height: 150,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: gradientColors,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              right: -40,
+              top: -40,
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withValues(alpha: ellipseOpacity),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${route.fromCity} → ${route.toCity}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0x33FFFFFF),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      route.dailyTripsLabel,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    'Başlangıç',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white.withValues(alpha: 0.85),
+                    ),
+                  ),
+                  Text(
+                    '${route.startingPrice} TL',
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      height: 1.15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _CampaignCard extends StatelessWidget {
   final CampaignModel campaign;
   final VoidCallback onTap;
@@ -886,7 +939,7 @@ class _CampaignCard extends StatelessWidget {
               Image.asset(
                 'assets/images/${campaign.imageName!.trim()}',
                 fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
               ),
             Container(
               decoration: BoxDecoration(
